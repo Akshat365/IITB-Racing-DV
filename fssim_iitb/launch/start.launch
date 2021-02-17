@@ -1,0 +1,26 @@
+<launch>
+
+  <node pkg='pointcloud_to_laserscan' type='pointcloud_to_laserscan_node' name='laserscan_producer'>
+
+    <remap from='cloud_in' to='/lidar/cones'/>
+    <remap from='scan' to='/perception/laserscan'/>
+    <rosparam>
+      transform_tolerance: 0.01
+      min_height: 0.0
+      max_height: 2.0
+
+      angle_min: -1.5708
+      angle_max: 1.5708
+      angle_increment: 0.0087
+      scan_time: 0.3333
+      range_min: 0.1
+      range_max: 40
+      use_inf: true
+
+      concurrency_level: 1
+    </rosparam>
+  </node>
+
+  <node pkg='fssim_iitb' type='cone_detections_pub.py' name='scanned_cones' output='screen'> </node>
+
+</launch>
